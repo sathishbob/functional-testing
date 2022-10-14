@@ -14,6 +14,11 @@ pipeline {
       steps {
         sh "mvn clean test"
       }
+         post {
+              sucess {
+                   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'TestReport', reportFiles: 'TestReport.html', reportName: 'FunctionalTestReport', reportTitles: '', useWrapperFileDirectly: true])
+              }
+         }
     }
   }
 }
