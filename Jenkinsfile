@@ -12,8 +12,7 @@ pipeline {
     }
     stage('execute test') {
       steps {
-         echo 'test'
-        //sh "mvn clean test"  
+        sh "mvn clean test"  
       }
          post {
               success {
