@@ -14,7 +14,7 @@ pipeline {
       steps {
         sh "mvn clean test"
         PASS = sh (
-             script: 'cat TestReport.html | grep passParent | cut -d ':' -f2 | cut -d ',' -f1',
+             script: sh 'cat TestReport.html | grep passParent | cut -d \':\' -f2 | cut -d \',\' -f1',
              returnStdout: true
              ).trim()
         echo "Total test case passed is: ${PASS}"  
