@@ -28,6 +28,7 @@ pipeline {
          steps {
             echo "Total test case passed is: ${PASS}" 
             echo "Total test case failled is: ${FAIL}" 
+            slackSend channel: 'notification', message: 'Test job completed- passed cases:${PASS} - Failled cases:${FAIL}', tokenCredentialId: 'slack'
             emailext body: "Please check console output at $BUILD_URL for more information\n Passed Test case count is: ${PASS} \n Failled Test case count is: ${FAIL} \n", to: "sathishbob@gmail.com", subject: 'JenkinsTraining - $PROJECT_NAME is changed- Build number is $BUILD_NUMBER - Build status is $BUILD_STATUS'
          }
     }
