@@ -12,18 +12,20 @@ pipeline {
     }
     stage('execute test') {
       steps {
-        sh "mvn clean test"
-        PASS = sh (
-             script: 'cat TestReport.html | grep passParent | cut -d \':\' -f2 | cut -d \',\' -f1',
-             returnStdout: true
-             ).trim()
-        echo "Total test case passed is: ${PASS}"  
-             
+        sh "mvn clean test"  
       }
          post {
               success {
                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'TestReport', reportFiles: 'TestReport.html', reportName: 'FunctionalTestReport', reportTitles: '', useWrapperFileDirectly: true])
               }
+         }
+    }
+    stages('get result') {
+         environment {
+             PASS = sh(script: 'cat TestReport.html | grep passParent | cut -d \':\' -f2 | cut -d \',\' -f1',returnStdout: true)
+         }
+         steps {
+              echo "Total test case passed is: ${PASS}" 
          }
     }
   }
